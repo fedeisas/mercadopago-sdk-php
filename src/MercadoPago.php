@@ -4,6 +4,7 @@ namespace MercadoPago;
 
 use MercadoPago\Exceptions\MercadoPagoException;
 use MercadoPago\Http\Client;
+use MercadoPago\Http\Response;
 use RuntimeException;
 
 class MercadoPago
@@ -131,7 +132,7 @@ class MercadoPago
      * Get information for specific authorized payment.
      * @param int $id
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function getAuthorizedPayment($id)
     {
@@ -141,11 +142,7 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
@@ -164,11 +161,7 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
@@ -187,11 +180,7 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
@@ -210,11 +199,7 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
@@ -233,18 +218,14 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
      * Create a checkout preference.
      * @param array $preference
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function createPreference($preference)
     {
@@ -254,11 +235,7 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
@@ -266,7 +243,7 @@ class MercadoPago
      * @param string $id
      * @param array $preference
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function updatePreference($id, $preference)
     {
@@ -276,18 +253,14 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
      * Get a checkout preference.
      * @param string $id
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function getPreference($id)
     {
@@ -297,18 +270,14 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
      * Create a preapproval payment.
      * @param array $preapprovalPayment
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function createPreapprovalPayment($preapprovalPayment)
     {
@@ -318,18 +287,14 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
      * Get a preapproval payment.
      * @param int $id
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function getPreapprovalPayment($id)
     {
@@ -339,11 +304,7 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
-        if ($response->isError()) {
-            throw new MercadoPagoException($response->getError(), $response->getStatusCode());
-        }
-
-        return $response->getData();
+        return $this->handleResponse($response);
     }
 
     /**
@@ -351,7 +312,7 @@ class MercadoPago
      * @param int $id
      * @param array $payment
      * @return array
-     * @throws MercadoPagoException If request fails.
+     * @throws MercadoPagoException If request failed.
      */
     public function updatePreapprovalPayment($id, array $payment = [])
     {
@@ -361,6 +322,16 @@ class MercadoPago
             ['access_token' => $this->getAccessToken()]
         );
 
+        return $this->handleResponse($response);
+    }
+
+    /**
+     * @param Response $response
+     * @return array
+     * @throws MercadoPagoException If request failed.
+     */
+    private function handleResponse(Response $response)
+    {
         if ($response->isError()) {
             throw new MercadoPagoException($response->getError(), $response->getStatusCode());
         }

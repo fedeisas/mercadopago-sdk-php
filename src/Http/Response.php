@@ -23,7 +23,7 @@ class Response
      */
     public function __construct($statusCode, $json = '{}')
     {
-        $this->data = (array) gijson_decode($json, true);
+        $this->data = (array) json_decode($json, true);
         $this->statusCode = (int) $statusCode;
     }
 
