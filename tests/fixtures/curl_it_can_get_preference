@@ -1,0 +1,34 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.mercadopago.com/checkout/preferences/SOME_ID?access_token=SOME_ACCESS_TOKEN'
+        headers:
+            Host: api.mercadopago.com
+            Accept: application/json
+            User-Agent: 'MercadoPago PHP SDK v0.5.2'
+            Content-Type: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Thu, 22 Jun 2017 21:04:16 GMT'
+            Content-Type: application/json;charset=UTF-8
+            Connection: keep-alive
+            Vary: 'Accept,Accept-Encoding, User-Agent'
+            Cache-Control: max-age=0
+            ETag: 280c008f0ed0eb5f50c6cff30f7736ef
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+            X-Request-Id: REQUEST_ID
+            X-XSS-Protection: '1; mode=block'
+            Strict-Transport-Security: max-age=15724800
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: Content-Type
+            Access-Control-Allow-Methods: 'PUT, GET, POST, DELETE, OPTIONS'
+            Access-Control-Max-Age: '86400'
+            Set-Cookie: 'some_cookie; Path=/; Secure; HTTPOnly'
+            Transfer-Encoding: chunked
+        body: '{"additional_info":"","auto_return":"","back_urls":{"failure":"","pending":"","success":""},"client_id":"1","collector_id":1,"date_created":"2017-06-22T16:58:21.688-04:00","expiration_date_from":null,"expiration_date_to":null,"expires":false,"external_reference":"","id":"SOME_ID","init_point":"https://www.mercadopago.com/mla/checkout/start?pref_id=SOME_ID","items":[{"id":"","currency_id":"ARS","title":"foo","picture_url":"","description":"","category_id":"","quantity":1,"unit_price":123.44313423123123}],"marketplace":"NONE","marketplace_fee":0,"notification_url":null,"operation_type":"regular_payment","payer":{"phone":{"area_code":"","number":""},"address":{"zip_code":"","street_name":"","street_number":null},"email":"","identification":{"number":"","type":""},"name":"","surname":"","date_created":""},"payment_methods":{"excluded_payment_methods":[{"id":""}],"default_installments":null,"default_payment_method_id":null,"excluded_payment_types":[{"id":""}],"installments":null},"sandbox_init_point":"https://sandbox.mercadopago.com/mla/checkout/pay?pref_id=SOME_ID","shipments":{"receiver_address":{"floor":"","zip_code":"","street_name":"","apartment":"","street_number":null}}}'

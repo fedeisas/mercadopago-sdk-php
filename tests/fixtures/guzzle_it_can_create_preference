@@ -1,0 +1,37 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.mercadopago.com/checkout/preferences?access_token=SOME_ACCESS_TOKEN'
+        headers:
+            Host: api.mercadopago.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'MercadoPago PHP SDK v0.5.2'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"items":[{"title":"foo","quantity":1,"currency_id":"ARS","unit_price":123.44313423123123}]}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Date: 'Thu, 22 Jun 2017 21:09:29 GMT'
+            Content-Type: application/json;charset=UTF-8
+            Connection: keep-alive
+            Vary: 'Accept,Accept-Encoding, User-Agent'
+            Cache-Control: max-age=0
+            ETag: f9c1e2dd1b890fe403d15d195d9db368
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+            X-Request-Id: REQUEST_ID
+            X-XSS-Protection: '1; mode=block'
+            Strict-Transport-Security: max-age=15724800
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: Content-Type
+            Access-Control-Allow-Methods: 'PUT, GET, POST, DELETE, OPTIONS'
+            Access-Control-Max-Age: '86400'
+            Set-Cookie: 'some_cookie; Path=/; Secure; HTTPOnly'
+            Transfer-Encoding: chunked
+        body: '{"collector_id":1,"operation_type":"regular_payment","items":[{"id":"","picture_url":"","title":"foo","description":"","category_id":"","currency_id":"ARS","quantity":1,"unit_price":123.44313423123123}],"payer":{"name":"","surname":"","email":"","date_created":"","phone":{"area_code":"","number":""},"identification":{"type":"","number":""},"address":{"street_name":"","street_number":null,"zip_code":""}},"back_urls":{"success":"","pending":"","failure":""},"auto_return":"","payment_methods":{"excluded_payment_methods":[{"id":""}],"excluded_payment_types":[{"id":""}],"installments":null,"default_payment_method_id":null,"default_installments":null},"client_id":"1","marketplace":"NONE","marketplace_fee":0,"shipments":{"receiver_address":{"zip_code":"","street_number":null,"street_name":"","floor":"","apartment":""}},"notification_url":null,"external_reference":"","additional_info":"","expires":false,"expiration_date_from":null,"expiration_date_to":null,"date_created":"2017-06-22T17:09:29.375-04:00","id":"SOME_ID","init_point":"https://www.mercadopago.com/mla/checkout/start?pref_id=SOME_ID","sandbox_init_point":"https://sandbox.mercadopago.com/mla/checkout/pay?pref_id=SOME_ID"}'

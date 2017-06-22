@@ -1,0 +1,34 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.mercadopago.com/checkout/preferences?access_token=SOME_ACCESS_TOKEN'
+        headers:
+            Host: api.mercadopago.com
+            Accept: application/json
+            User-Agent: 'MercadoPago PHP SDK v0.5.2'
+            Content-Type: application/json
+        body: '{"items":[{"title":"foo","quantity":1,"currency_id":"XUY","unit_price":"asdasd"}]}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '400'
+            message: 'Bad Request'
+        headers:
+            Date: 'Thu, 22 Jun 2017 20:58:22 GMT'
+            Content-Type: application/json;charset=UTF-8
+            Connection: keep-alive
+            Vary: 'Accept,Accept-Encoding, User-Agent'
+            Cache-Control: max-age=0
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+            X-Request-Id: REQUEST_ID
+            X-XSS-Protection: '1; mode=block'
+            Strict-Transport-Security: max-age=15724800
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: Content-Type
+            Access-Control-Allow-Methods: 'PUT, GET, POST, DELETE, OPTIONS'
+            Access-Control-Max-Age: '86400'
+            Set-Cookie: 'some_cookie; Path=/; Secure; HTTPOnly'
+            Transfer-Encoding: chunked
+        body: '{"message":"currency_id invalid","error":"invalid_items","status":400,"cause":[]}'

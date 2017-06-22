@@ -1,0 +1,53 @@
+{
+    "name": "fedeisas/mercadopago-sdk-php",
+    "type": "library",
+    "description": "MercadoPago PHP SDK https://developers.mercadopago.com/",
+    "keywords": [
+        "mercadopago-sdk-php"
+    ],
+    "homepage": "https://github.com/fedeisas/mercadopago-sdk-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fede Isas",
+            "email": "federicoisas@gmail.com",
+            "homepage": "https://github.com/fedeisas",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~5.6|~7.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "php-vcr/php-vcr": "^1.3",
+        "php-vcr/phpunit-testlistener-vcr": "^2.0",
+        "phpunit/phpunit": "~5.7",
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "MercadoPago\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --configuration phpunit.xml.dist",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
