@@ -9,13 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 class MercadoPagoCurlTest extends TestCase
 {
-    /**
-     * @test
-     */
+    /** @test **/
     public function itCanCreateInstance()
     {
         $client = $this->getMockBuilder(CurlClient::class)->getMock();
         new MercadoPago($client);
+    }
+
+    /** @test **/
+    public function itCanGetClient()
+    {
+        $client = $this->getMockBuilder(CurlClient::class)->getMock();
+        $mp = new MercadoPago($client);
+        $this->assertEquals($client, $mp->getClient());
     }
 
     /**
@@ -30,6 +36,20 @@ class MercadoPagoCurlTest extends TestCase
             'SOME_ACCESS_TOKEN',
             $mp->getAccessToken()
         );
+    }
+
+    /**
+     * @test
+     * @vcr curl_it_can_request_access_token_error
+     * @expectedExceptionMessage Invalid client_id
+     * @expectedExceptionCode 400
+     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     */
+    public function itCanRequestAccessTokenError()
+    {
+        $mp = new MercadoPago(new CurlClient());
+        $mp->setCredentials('WRONG_CLIENT_ID', 'WRONG_CLIENT_SECRET');
+        $mp->getAccessToken();
     }
 
     /**

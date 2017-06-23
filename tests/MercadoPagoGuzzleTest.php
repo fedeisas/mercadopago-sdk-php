@@ -9,13 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 class MercadoPagoGuzzleTest extends TestCase
 {
-    /**
-     * @test
-     */
+    /** @test **/
     public function itCanCreateInstance()
     {
         $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
         new MercadoPago($client);
+    }
+
+    /** @test **/
+    public function itCanGetClient()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+        $mp = new MercadoPago($client);
+        $this->assertEquals($client, $mp->getClient());
     }
 
     /**
@@ -30,6 +36,20 @@ class MercadoPagoGuzzleTest extends TestCase
             'SOME_ACCESS_TOKEN',
             $mp->getAccessToken()
         );
+    }
+
+    /**
+     * @test
+     * @vcr guzzle_it_can_request_access_token_error
+     * @expectedExceptionMessage Invalid client_id
+     * @expectedExceptionCode 400
+     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     */
+    public function itCanRequestAccessTokenError()
+    {
+        $mp = new MercadoPago(new GuzzleClient());
+        $mp->setCredentials('WRONG_CLIENT_ID', 'WRONG_CLIENT_SECRET');
+        $mp->getAccessToken();
     }
 
     /**

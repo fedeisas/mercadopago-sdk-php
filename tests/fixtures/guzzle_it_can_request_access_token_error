@@ -1,0 +1,36 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.mercadopago.com/oauth/token'
+        headers:
+            Host: api.mercadopago.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'MercadoPago PHP SDK v0.5.2'
+            Content-Type: application/x-www-form-urlencoded
+            Accept: application/json
+        body: 'client_id=WRONG_CLIENT_ID&client_secret=WRONG_CLIENT_SECRET&grant_type=client_credentials'
+    response:
+        status:
+            http_version: '1.1'
+            code: '400'
+            message: 'Bad Request'
+        headers:
+            Date: 'Fri, 23 Jun 2017 00:02:19 GMT'
+            Content-Type: application/json;charset=UTF-8
+            Connection: keep-alive
+            Vary: 'Accept,Accept-Encoding, User-Agent'
+            Cache-Control: max-age=0
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+            X-Request-Id: 423f5665-aad5-405c-a375-b7483c357f03
+            X-XSS-Protection: '1; mode=block'
+            Strict-Transport-Security: max-age=15724800
+            Access-Control-Allow-Origin: '*'
+            Access-Control-Allow-Headers: Content-Type
+            Access-Control-Allow-Methods: 'PUT, GET, POST, DELETE, OPTIONS'
+            Access-Control-Max-Age: '86400'
+            Set-Cookie: 'TS016da221=0119b547a220a9f27a8f66d5b1a419906324a0de5964d4489bef81c656cbe3abd2bbbf0f52c8d3251c662e8442760b9e0baf359d9e; Path=/; Secure; HTTPOnly'
+            Transfer-Encoding: chunked
+        body: '{"message":"Invalid client_id","error":"bad_request","status":400,"cause":{"code":11,"description":"Invalid client_id","data":null}}'
