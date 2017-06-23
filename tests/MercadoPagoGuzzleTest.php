@@ -4,6 +4,7 @@ namespace Tests;
 
 use MercadoPago\Exceptions\MercadoPagoException;
 use MercadoPago\Http\GuzzleClient;
+use MercadoPago\Http\Response;
 use MercadoPago\MercadoPago;
 use PHPUnit\Framework\TestCase;
 
@@ -36,6 +37,17 @@ class MercadoPagoGuzzleTest extends TestCase
             'SOME_ACCESS_TOKEN',
             $mp->getAccessToken()
         );
+    }
+
+    /**
+     * @test
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Client ID and Client Secret are required to request a new access token.
+     */
+    public function itCantRequestTokensWithoutCredentials()
+    {
+        $mp = new MercadoPago(new GuzzleClient());
+        $mp->getAccessToken();
     }
 
     /**
@@ -126,5 +138,40 @@ class MercadoPagoGuzzleTest extends TestCase
 
         $this->assertEquals('SOME_ID', $preference['id']);
         $this->assertEquals('foo', $preference['items'][0]['title']);
+    }
+
+    /** @test **/
+    public function itCanUseSandboxMode()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->exactly(2))
+            ->method('get')
+            ->withConsecutive(
+                [
+                    '/sandbox/collections/search',
+                    ['limit' => 10, 'offset' => 0],
+                    ['access_token' => 'SOME_ACCESS_TOKEN'],
+                ],
+                [
+                    '/collections/search',
+                    ['limit' => 10, 'offset' => 0],
+                    ['access_token' => 'SOME_ACCESS_TOKEN'],
+                ]
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $mp->enableSandboxMode();
+        $response = $mp->searchPayments();
+
+        $this->assertEquals([], $response);
+
+        $mp->disableSandboxMode();
+        $response = $mp->searchPayments();
+
+        $this->assertEquals([], $response);
     }
 }

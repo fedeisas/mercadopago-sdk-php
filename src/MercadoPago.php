@@ -210,7 +210,7 @@ class MercadoPago
      * @return array
      * @throws MercadoPagoException If request failed.
      */
-    public function searchPayments(array $filters = [], $offset = 0, $limit = 0)
+    public function searchPayments(array $filters = [], $offset = 0, $limit = 10)
     {
         $response = $this->client->get(
             ($this->sandbox ? '/sandbox' : '') . '/collections/search',
