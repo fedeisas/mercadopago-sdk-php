@@ -38,22 +38,35 @@ class Response
 
         $messagePieces = [$this->get('message')];
         if ($this->get('cause')) {
-            if ($this->get('cause.code') && $this->get('cause.description')) {
-                $messagePieces[] = $this->get('cause.code') . ': ' . $this->get('cause.description');
-            } elseif (is_array($this->get('cause'))) {
-                foreach ($this->get('cause') as $causes) {
-                    if (is_array($causes)) {
-                        foreach ($causes as $cause) {
-                            $messagePieces[] = $cause['code'] . ': ' . $cause['description'];
-                        }
-                    } else {
-                        $messagePieces[] = $causes['code'] . ': ' . $causes['description'];
+            $messagePieces = array_merge($messagePieces, $this->parseCauses($this->get('cause')));
+        }
+
+        return join(' - ', $messagePieces);
+    }
+
+    /**
+     * @param array $cause
+     * @return array
+     */
+    private function parseCauses(array $cause)
+    {
+        $pieces = [];
+
+        if (is_array($cause) && array_key_exists('code', $cause) && array_key_exists('description', $cause)) {
+            $pieces[] = $cause['code'] . ': ' . $cause['description'];
+        } elseif (is_array($cause)) {
+            foreach ($cause as $causes) {
+                if (is_array($causes)) {
+                    foreach ($causes as $cause) {
+                        $pieces[] = $cause['code'] . ': ' . $cause['description'];
                     }
+                } else {
+                    $pieces[] = $causes['code'] . ': ' . $causes['description'];
                 }
             }
         }
 
-        return join(' - ', $messagePieces);
+        return $pieces;
     }
 
     /**
