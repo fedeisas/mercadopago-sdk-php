@@ -63,17 +63,23 @@ class ResponseTest extends TestCase
     {
         $response = new Response(
             401,
-            json_encode([
-                'message' => 'Error message',
-                'cause' => [
-                    ['code' => 4000, 'description' => 'Error Description'],
-                    ['code' => 4001, 'description' => 'Another Error Description'],
+            '{
+                "message":"invalid parameters",
+                "error":"bad_request",
+                "status":400,
+                "cause":[
+                    [
+                        {
+                            "code":"card-113",
+                            "description":"Invalid token."
+                        }
+                    ]
                 ]
-            ])
+            }'
         );
         $this->assertTrue($response->isError());
         $this->assertEquals(
-            'Error message - 4000: Error Description - 4001: Another Error Description',
+            'invalid parameters - card-113: Invalid token.',
             $response->getError()
         );
     }

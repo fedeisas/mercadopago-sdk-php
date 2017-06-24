@@ -41,9 +41,15 @@ class Response
             if ($this->get('cause.code') && $this->get('cause.description')) {
                 $messagePieces[] = $this->get('cause.code') . ': ' . $this->get('cause.description');
             } elseif (is_array($this->get('cause'))) {
-                $messagePieces = array_merge($messagePieces, array_map(function ($cause) {
-                    return $cause['code'] . ': '. $cause['description'];
-                }, $this->get('cause')));
+                foreach ($this->get('cause') as $causes) {
+                    if (is_array($causes)) {
+                        foreach ($causes as $cause) {
+                            $messagePieces[] = $cause['code'] . ': ' . $cause['description'];
+                        }
+                    } else {
+                        $messagePieces[] = $causes['code'] . ': ' . $causes['description'];
+                    }
+                }
             }
         }
 
