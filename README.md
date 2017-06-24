@@ -155,7 +155,7 @@ use MercadoPago\MercadoPago;
 use MercadoPago\Http\GuzzleClient;
 
 $mp = new MercadoPago(new GuzzleClient());
-$mp->setAccessTOken('SOME_ACCESS_TOKEN');
+$mp->setAccessToken('SOME_ACCESS_TOKEN');
 ```
 
 ### Create payment
