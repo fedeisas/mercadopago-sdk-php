@@ -2,20 +2,22 @@
 -
     request:
         method: POST
-        url: 'https://api.mercadopago.com/oauth/token'
+        url: 'https://api.mercadopago.com/preapproval?access_token=SOME_ACCESS_TOKEN'
         headers:
             Host: api.mercadopago.com
-            Accept: application/json
+            Expect: null
+            Accept-Encoding: null
             User-Agent: 'MercadoPago PHP SDK v0.5.2'
-            Content-Type: application/x-www-form-urlencoded
-        body: 'client_id=WRONG_CLIENT_ID&client_secret=WRONG_CLIENT_SECRET&grant_type=client_credentials'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"payer_email":"my_customer@my-site.com","back_url":"http:\/\/www.my-site.com","reason":"Monthly subscription to premium package","external_reference":"OP-1234","auto_recurring":{"frequency":1,"frequency_type":"months","transaction_amount":60,"currency_id":"ARS","start_date":"2014-12-10T14:58:11.778-03:00","end_date":"2015-06-10T14:58:11.778-03:00"}}'
     response:
         status:
             http_version: '1.1'
             code: '400'
             message: 'Bad Request'
         headers:
-            Date: 'Fri, 23 Jun 2017 00:04:16 GMT'
+            Date: 'Sat, 24 Jun 2017 16:11:09 GMT'
             Content-Type: application/json;charset=UTF-8
             Connection: keep-alive
             Vary: 'Accept,Accept-Encoding, User-Agent'
@@ -31,4 +33,4 @@
             Access-Control-Max-Age: '86400'
             Set-Cookie: 'some_cookie; Path=/; Secure; HTTPOnly'
             Transfer-Encoding: chunked
-        body: '{"message":"Invalid client_id","error":"bad_request","status":400,"cause":{"code":11,"description":"Invalid client_id","data":null}}'
+        body: '{"message":"Cannot operate between different countries","error":"bad_request","status":400,"cause":[]}'

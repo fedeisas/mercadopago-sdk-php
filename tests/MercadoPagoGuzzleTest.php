@@ -105,7 +105,6 @@ class MercadoPagoGuzzleTest extends TestCase
      */
     public function itCanCreatePreferenceError()
     {
-        //
         $mp = new MercadoPago(new GuzzleClient());
         $mp->setAccessToken('SOME_ACCESS_TOKEN');
         try {
@@ -173,5 +172,45 @@ class MercadoPagoGuzzleTest extends TestCase
         $response = $mp->searchPayments();
 
         $this->assertEquals([], $response);
+    }
+
+    /**
+     * @test
+     * @vcr guzzle_it_can_create_preapproval_payment
+     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     * @expectedExceptionMessage Cannot operate between different countries
+     */
+    public function itCanCreatePreapprovalPayment()
+    {
+        $mp = new MercadoPago(new GuzzleClient());
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $preapproval = $mp->createPreapprovalPayment([
+            "payer_email" => "foo@bar.com",
+            "back_url" => "http://www.my-site.com",
+            "reason" => "Monthly subscription to premium package",
+            "external_reference" => "OP-1234",
+            "auto_recurring" => [
+                "frequency" => 0,
+                "frequency_type" => "months",
+                "transaction_amount" => 60,
+                "currency_id" => "USD",
+                "start_date" => "2014-12-10T14:58:11.778-03:00",
+                "end_date" => "2015-06-10T14:58:11.778-03:00"
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     * @vcr guzzle_it_can_get_preapproval_payment
+     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     * @expectedExceptionMessage The preapproval with id 123 does not exist
+     */
+    public function itCanGetPreapprovalPayment()
+    {
+        $mp = new MercadoPago(new GuzzleClient());
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+        $preapproval = $mp->getPreapprovalPayment('123');
     }
 }

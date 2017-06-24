@@ -119,8 +119,8 @@ class MercadoPago
     }
 
     /**
-     * @param null $clientId
-     * @param null $clientSecret
+     * @param mixed $clientId
+     * @param mixed $clientSecret
      */
     public function setCredentials($clientId = null, $clientSecret = null)
     {

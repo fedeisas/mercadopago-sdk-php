@@ -1,21 +1,21 @@
 
 -
     request:
-        method: POST
-        url: 'https://api.mercadopago.com/oauth/token'
+        method: GET
+        url: 'https://api.mercadopago.com/preapproval/123?access_token=SOME_ACCESS_TOKEN'
         headers:
             Host: api.mercadopago.com
-            Accept: application/json
+            Accept-Encoding: null
             User-Agent: 'MercadoPago PHP SDK v0.5.2'
-            Content-Type: application/x-www-form-urlencoded
-        body: 'client_id=WRONG_CLIENT_ID&client_secret=WRONG_CLIENT_SECRET&grant_type=client_credentials'
+            Content-Type: application/json
+            Accept: application/json
     response:
         status:
             http_version: '1.1'
-            code: '400'
-            message: 'Bad Request'
+            code: '404'
+            message: 'Not Found'
         headers:
-            Date: 'Fri, 23 Jun 2017 00:04:16 GMT'
+            Date: 'Sat, 24 Jun 2017 16:20:33 GMT'
             Content-Type: application/json;charset=UTF-8
             Connection: keep-alive
             Vary: 'Accept,Accept-Encoding, User-Agent'
@@ -31,4 +31,4 @@
             Access-Control-Max-Age: '86400'
             Set-Cookie: 'some_cookie; Path=/; Secure; HTTPOnly'
             Transfer-Encoding: chunked
-        body: '{"message":"Invalid client_id","error":"bad_request","status":400,"cause":{"code":11,"description":"Invalid client_id","data":null}}'
+        body: '{"message":"The preapproval with id 123 does not exist","error":"not_found","status":404,"cause":[]}'
