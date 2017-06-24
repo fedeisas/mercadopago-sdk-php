@@ -55,7 +55,7 @@ class MercadoPagoGuzzleTest extends TestCase
      * @vcr guzzle_it_can_request_access_token_error
      * @expectedExceptionMessage Invalid client_id
      * @expectedExceptionCode 400
-     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     * @expectedException \MercadoPago\Exceptions\MercadoPagoException
      */
     public function itCanRequestAccessTokenError()
     {
@@ -177,7 +177,7 @@ class MercadoPagoGuzzleTest extends TestCase
     /**
      * @test
      * @vcr guzzle_it_can_create_preapproval_payment
-     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     * @expectedException \MercadoPago\Exceptions\MercadoPagoException
      * @expectedExceptionMessage Cannot operate between different countries
      */
     public function itCanCreatePreapprovalPayment()
@@ -185,7 +185,7 @@ class MercadoPagoGuzzleTest extends TestCase
         $mp = new MercadoPago(new GuzzleClient());
         $mp->setAccessToken('SOME_ACCESS_TOKEN');
 
-        $preapproval = $mp->createPreapprovalPayment([
+        $mp->createPreapprovalPayment([
             "payer_email" => "foo@bar.com",
             "back_url" => "http://www.my-site.com",
             "reason" => "Monthly subscription to premium package",
@@ -204,13 +204,149 @@ class MercadoPagoGuzzleTest extends TestCase
     /**
      * @test
      * @vcr guzzle_it_can_get_preapproval_payment
-     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     * @expectedException \MercadoPago\Exceptions\MercadoPagoException
      * @expectedExceptionMessage The preapproval with id 123 does not exist
      */
     public function itCanGetPreapprovalPayment()
     {
         $mp = new MercadoPago(new GuzzleClient());
         $mp->setAccessToken('SOME_ACCESS_TOKEN');
-        $preapproval = $mp->getPreapprovalPayment('123');
+        $mp->getPreapprovalPayment('123');
+    }
+
+    /** @test **/
+    public function itCanGetAuthorizedPayment()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('get')
+            ->with(
+                '/authorized_payments/123',
+                [],
+                ['access_token' => 'SOME_ACCESS_TOKEN']
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $response = $mp->getAuthorizedPayment(123);
+
+        $this->assertEquals([], $response);
+    }
+
+    /** @test **/
+    public function itCanRefundPayment()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('put')
+            ->with(
+                '/collections/123',
+                ['status' => 'refunded'],
+                ['access_token' => 'SOME_ACCESS_TOKEN']
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $response = $mp->refundPayment(123);
+
+        $this->assertEquals([], $response);
+    }
+
+    /** @test **/
+    public function itCanCancelPayment()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('put')
+            ->with(
+                '/collections/123',
+                ['status' => 'cancelled'],
+                ['access_token' => 'SOME_ACCESS_TOKEN']
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $response = $mp->cancelPayment(123);
+
+        $this->assertEquals([], $response);
+    }
+
+    /** @test **/
+    public function itCanCancelPreapprovalPayment()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('put')
+            ->with(
+                '/preapproval/123',
+                ['status' => 'cancelled'],
+                ['access_token' => 'SOME_ACCESS_TOKEN']
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $response = $mp->cancelPreapprovalPayment(123);
+
+        $this->assertEquals([], $response);
+    }
+
+    /** @test **/
+    public function itCanUpdatePreference()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('put')
+            ->with(
+                '/checkout/preferences/123',
+                ['data' => 'foo'],
+                ['access_token' => 'SOME_ACCESS_TOKEN']
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $response = $mp->updatePreference(123, [
+            'data' => 'foo',
+        ]);
+
+        $this->assertEquals([], $response);
+    }
+
+    /** @test **/
+    public function itCanUpdatePreapprovalPayment()
+    {
+        $client = $this->getMockBuilder(GuzzleClient::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('put')
+            ->with(
+                '/preapproval/123',
+                ['data' => 'foo'],
+                ['access_token' => 'SOME_ACCESS_TOKEN']
+            )
+            ->will($this->returnValue(new Response(200, '{}')));
+
+        $mp = new MercadoPago($client);
+        $mp->setAccessToken('SOME_ACCESS_TOKEN');
+
+        $response = $mp->updatePreapprovalPayment(123, [
+            'data' => 'foo',
+        ]);
+
+        $this->assertEquals([], $response);
     }
 }

@@ -43,7 +43,7 @@ class MercadoPagoCurlTest extends TestCase
      * @vcr curl_it_can_request_access_token_error
      * @expectedExceptionMessage Invalid client_id
      * @expectedExceptionCode 400
-     * @expectedException MercadoPago\Exceptions\MercadoPagoException
+     * @expectedException \MercadoPago\Exceptions\MercadoPagoException
      */
     public function itCanRequestAccessTokenError()
     {
